@@ -66,8 +66,10 @@ if (Meteor.isClient) {
       var chat = Chats.findOne({_id:Session.get("chatId")});
       return chat.messages;
     }, 
-    other_user:function(){
-      return ""
+    other_user:function()
+    {
+      var chat = Chats.findOne({_id:Session.get("chatId")});
+      return chat.user2Id;
     }, 
 
   })
@@ -87,7 +89,7 @@ if (Meteor.isClient) {
       // is a good idea to insert data straight from the form
       // (i.e. the user) into the database?? certainly not. 
       // push adds the message to the end of the array
-      msgs.push({text: event.target.chat.value});
+      msgs.push({text: event.target.chat.value,sent_by:"dave"});
       // reset the form
       event.target.chat.value = "";
       // put the messages array onto the chat object

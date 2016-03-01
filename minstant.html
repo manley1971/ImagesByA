@@ -73,7 +73,9 @@
 		<div class="col-md-12">
 			<div class="well well-lg">
 			{{#each messages}}
+			<img src="" class="avatar_img">			
 			{{> chat_message}}
+
 			{{/each}}
 			</div>	
 		</div>
@@ -90,7 +92,7 @@
 
 <!-- simple template that displays a message -->
 <template name="chat_message">
-	someone said: {{text}}
+	{{sent_by}} said: {{text}}
 	<br>
 </template>
 
