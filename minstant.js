@@ -89,7 +89,9 @@ if (Meteor.isClient) {
       // is a good idea to insert data straight from the form
       // (i.e. the user) into the database?? certainly not. 
       // push adds the message to the end of the array
-      msgs.push({text: event.target.chat.value,sent_by:"dave"});
+      user = Meteor.users.findOne({_id:Meteor.userId()});
+ console.log(JSON.stringify(chat.user1Id)+"  //user1//"+user);
+      msgs.push({text: event.target.chat.value,avatar:user.profile.avatar,sent_by:JSON.stringify(chat.user1Id)});
       // reset the form
       event.target.chat.value = "";
       // put the messages array onto the chat object
