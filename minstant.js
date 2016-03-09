@@ -1,19 +1,16 @@
 Chats = new Mongo.Collection("chats");
-
-if (Meteor.isClient) {
-  // set up the main template the the router will use to build pages
-  Router.configure({
+Router.configure({
     layoutTemplate: 'ApplicationLayout'
   });
   // specify the top level route, the page users see when they arrive at the site
-  Router.route('/', function () {
+Router.route('/', function () {
     console.log("rendering root /");
     this.render("navbar", {to:"header"});
     this.render("lobby_page", {to:"main"});
   });
 
   // specify a route that allows the current user to chat to another users
-  Router.route('/chat/:_id', function () {
+Router.route('/chat/:_id', function () {
     if (!Meteor.userId()) {
       console.log("Security alert: trying to chat but not logged in");
       this.render("navbar", {to:"header"});
@@ -44,12 +41,20 @@ if (Meteor.isClient) {
     this.render("chat_page", {to:"main"});
   });
 
+
+
+if (Meteor.isClient) {
+  // set up the main template the the router will use to build pages
+  Meteor.subscribe("chats");
+  Meteor.subscribe("users");
+
   ///
   // helper functions
   ///
   Template.available_user_list.helpers({
-    users:function(){
-      return Meteor.users.find();
+   users:function(){
+ 
+     return Meteor.users.find();
     }
   })
  Template.available_user.helpers({
@@ -108,6 +113,23 @@ if (Meteor.isClient) {
 // and the password test123
 
 if (Meteor.isServer) {
+
+  Meteor.publish('users', function () {
+    return Meteor.users.find();
+  }),
+
+
+  // Only publish chats that belong to the current user
+  Meteor.publish("chats", function () {
+    return Chats.find();
+/*{
+      $or: [
+        { user1Id:this.userId },
+        { user2Id: this.userId }
+      ]
+    });*/
+  }),
+
   Meteor.startup(function () {
 
     if (!Meteor.users.findOne()){
@@ -141,13 +163,17 @@ if (Meteor.isServer) {
         chat.messages = msgs;
         // update the chat object in the database.
         Chats.update(chat._id, chat);
+	console.log("inserted into chat::i"+JSON.stringify(chat));
       }
       else {
         console.log("Security alert: Wrong user is logged in.")
       }
-      }},
+    }},
     insertChat: function(user1,user2){
-
-      Chats.insert({user1Id:user1, user2Id:user2});
+      if (!user1 || !user2) {
+         console.log("Error: cannot chat with someone that does not exist on the internet!");
+      }
+      else
+        Chats.insert({user1Id:user1, user2Id:user2});
     }
   });
