@@ -15,6 +15,7 @@ Router.route('/chat/:_id', function () {
       console.log("Security alert: trying to chat but not logged in");
       this.render("navbar", {to:"header"});
       this.render("lobby_page", {to:"main"});
+      return;
     }
 
     // the user they want to chat to has id equal to
@@ -76,16 +77,55 @@ if (Meteor.isClient) {
   Template.chat_page.helpers({
     messages:function(){
       var chat = Chats.findOne({_id:Session.get("chatId")});
-      return chat.messages;
+      if (chat)
+        return chat.messages;
     },
     other_user:function()
     {
       var chat = Chats.findOne({_id:Session.get("chatId")});
-      return chat.user2Id;
+      if (chat)
+        return chat.user2Id;
     },
   });
 
  Template.chat_page.events({
+
+ "click #laugh":function (e){
+          $("#m").val($("#m").val() + " :-D ");
+  },
+
+
+ "click #cheeky":function (e){
+          $("#m").val($("#m").val() + " :-P ");
+  },
+
+
+ "click #happy":function (e){
+    console.log("happy added to existing message" +          $("#m").val());
+          $("#m").val($("#m").val() + " :-)) ");
+  },
+
+ "click #smiley":function (e){
+    console.log("smiley added to existing message" +          $("#m").val());
+          $("#m").val($("#m").val() + " :-) ");
+  },
+
+
+ "click #sad":function (e){
+          $("#m").val($("#m").val() + " :-( ");
+  },
+
+
+ "click #shocked":function (e){
+          $("#m").val($("#m").val() + " :-O ");
+  },
+
+
+ "click #winky":function (e){
+          $("#m").val($("#m").val() + " ;-) ");
+  },
+
+
   // this event fires when the user sends a message on the chat page
   'submit .js-send-chat':function(event){
     // stop the form from triggering a page reload
@@ -121,13 +161,13 @@ if (Meteor.isServer) {
 
   // Only publish chats that belong to the current user
   Meteor.publish("chats", function () {
-    return Chats.find();
-/*{
+    return Chats.find(
+{
       $or: [
         { user1Id:this.userId },
         { user2Id: this.userId }
       ]
-    });*/
+    });
   }),
 
   Meteor.startup(function () {
@@ -150,7 +190,6 @@ if (Meteor.isServer) {
     // see if we can find a chat object in the database
     // to which we'll add the message
     var chat = Chats.findOne({_id:chatId});
-    console.log("insert into chat:"+JSON.stringify(chat));
     if (chat){// ok - we have a chat to use
       if (this.userId==chat.user1Id || this.userId==chat.user2Id) {
         var msgs = chat.messages; // pull the messages property
@@ -163,7 +202,6 @@ if (Meteor.isServer) {
         chat.messages = msgs;
         // update the chat object in the database.
         Chats.update(chat._id, chat);
-	console.log("inserted into chat::i"+JSON.stringify(chat));
       }
       else {
         console.log("Security alert: Wrong user is logged in.")

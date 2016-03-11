@@ -68,22 +68,30 @@
 
 <!-- Top level template for the chat page -->
 <template name="chat_page">
-	<h2>Type in the box below to send a message!</h2>
-	<div class="row">
+	<h5>Type in the box below to send a message. You can type obvious characters like ";):" or ":-)" and get emoticons.
+            Or you can click the buttons to have them inserted for you.</h5>
+	
+	<div class="row chatty">
 		<div class="col-md-12">
 			<div class="well well-lg">
 			{{#each messages}}
 			{{> chat_message}}
-
 			{{/each}}
 			</div>	
 		</div>
 	</div>
     <div class="row">
+                       <button class="btn" id= "winky">{{{parseEmoticons ";)"}}}</button>	
+                       <button class="btn" id= "laugh">{{{parseEmoticons ":-D"}}}</button>	
+                       <button class="btn" id= "cheeky">{{{parseEmoticons ":-P"}}}</button>	
+                       <button class="btn" id= "happy">{{{parseEmoticons ":-))"}}}</button>	
+                       <button class="btn" id= "smiley">{{{parseEmoticons ":-)"}}}</button>	
+                       <button class="btn" id= "sad">{{{parseEmoticons ":-("}}}</button>	
+                       <button class="btn" id= "shocked">{{{parseEmoticons ":-O"}}}</button>	
 		<div class="col-md-12">
 			<form class="js-send-chat">
-			<input class="input" type="text" name="chat" placeholder="type a message here...">
-			<button class="btn btn-default">send</button>
+			<input id="m"  class="input" type="text" name="chat" placeholder="type a message here...">
+		<button class="btn btn-default">send</button>
 		</form>
 		</div>
 	</div>
@@ -91,10 +99,12 @@
 
 <!-- simple template that displays a message -->
 <template name="chat_message">
+	<div class="one">
 	<img src="/{{avatar}}" class="avatar_img">
 	
-	{{sent_by}} said: {{text}}
+	{{sent_by}}:{{{parseEmoticons text}}}
 	<br>
+	</div>
 </template>
 
 
