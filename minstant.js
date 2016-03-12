@@ -1,4 +1,6 @@
 Chats = new Mongo.Collection("chats");
+var MAX_MESSAGES = 1000000*100; //container size times messages
+
 Router.configure({
     layoutTemplate: 'ApplicationLayout'
   });
@@ -143,6 +145,9 @@ if (Meteor.isClient) {
                   Session.get("chatId"));
     // reset the form
     event.target.chat.value = "";
+
+    $(".chatty").scrollTop(MAx_MESSAGES);
+    //$(".chatty").scrollTop($(".chatty").scrollHeight);
     }
  });
 }
