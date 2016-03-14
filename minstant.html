@@ -8,7 +8,7 @@
 <!-- this is the main template used by iron:router to build the page -->
 <template name="ApplicationLayout">
 	{{> yield "header"}}
-	
+
 	<div class="container">
 	{{> yield "main"}}
 	</div>
@@ -49,10 +49,10 @@
 <template name="available_user">
 	<div class="col-md-2">
 		<div class="user_avatar">
-			{{#if isMyUser _id}} 
+			{{#if isMyUser _id}}
 			<div class="bg-success">{{getUsername _id}} (YOU)
 				<br/>
-				<img src="/{{profile.avatar}}" class="avatar_img">			
+				<img src="/{{profile.avatar}}" class="avatar_img">
 			</div>
 			{{else}}
 			<a href="/chat/{{_id}}">
@@ -66,28 +66,35 @@
 </template>
 
 
+
 <!-- Top level template for the chat page -->
 <template name="chat_page">
-	<h5>Type in the box below to send a message. You can type obvious characters like ";):" or ":-)" and get emoticons.
+	<h5>Please type in the box below to send a message. You can type obvious characters like ";):" or ":-)" and get emoticons.
             Or you can click the buttons to have them inserted for you.</h5>
-	
+
 	<div class="row chatty">
-		<div class="col-md-12">
-			<div class="well well-lg">
+
+			<div class="well well-lg insidechatty">
 			{{#each messages}}
 			{{> chat_message}}
 			{{/each}}
-			</div>	
-		</div>
+      ... and you can send your chatmate all the messages you would want
+      <br>
+      <br>
+      <br>
+      <br>
+      
+			</div>
+
 	</div>
     <div class="row">
-                       <button class="btn" id= "winky">{{{parseEmoticons ";)"}}}</button>	
-                       <button class="btn" id= "laugh">{{{parseEmoticons ":-D"}}}</button>	
-                       <button class="btn" id= "cheeky">{{{parseEmoticons ":-P"}}}</button>	
-                       <button class="btn" id= "happy">{{{parseEmoticons ":-))"}}}</button>	
-                       <button class="btn" id= "smiley">{{{parseEmoticons ":-)"}}}</button>	
-                       <button class="btn" id= "sad">{{{parseEmoticons ":-("}}}</button>	
-                       <button class="btn" id= "shocked">{{{parseEmoticons ":-O"}}}</button>	
+                       <button class="btn" id= "winky">{{{parseEmoticons ";)"}}}</button>
+                       <button class="btn" id= "laugh">{{{parseEmoticons ":-D"}}}</button>
+                       <button class="btn" id= "cheeky">{{{parseEmoticons ":-P"}}}</button>
+                       <button class="btn" id= "happy">{{{parseEmoticons ":-))"}}}</button>
+                       <button class="btn" id= "smiley">{{{parseEmoticons ":-)"}}}</button>
+                       <button class="btn" id= "sad">{{{parseEmoticons ":-("}}}</button>
+                       <button class="btn" id= "shocked">{{{parseEmoticons ":-O"}}}</button>
 		<div class="col-md-12">
 			<form class="js-send-chat">
 			<input id="m"  class="input" type="text" name="chat" placeholder="type a message here...">
@@ -101,11 +108,8 @@
 <template name="chat_message">
 	<div class="one">
 	<img src="/{{avatar}}" class="avatar_img">
-	
+
 	{{sent_by}}:{{{parseEmoticons text}}}
 	<br>
 	</div>
 </template>
-
-
-

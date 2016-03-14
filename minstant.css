@@ -1,7 +1,8 @@
 /* CSS declarations go here */
 
 .chatty {
-    height: 450px;
+  height: 330px;
+  width:85%;
   overflow:scroll;
   box-sizing: border-box;
   border-style: solid;
@@ -20,10 +21,14 @@
   box-shadow: 10px 10px 25px 20px #888888;
 }
 
+
+.m{
+  width:85%;
+}
 .one {
   overflow:scroll;
   height: 110px;
-  width: 805px;
+  width: 85%;
   box-sizing: border-box;
   border-style: solid;
   border-width: 3px;

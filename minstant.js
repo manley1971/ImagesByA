@@ -1,5 +1,10 @@
 Chats = new Mongo.Collection("chats");
 var MAX_MESSAGES = 1000000*100; //container size times messages
+function timerScroll() {
+  console.log("Scrolling down.")
+  $(".chatty").scrollTop(Number.MAX_VALUE);
+  $(".insidechatty").scrollTop(MAX_MESSAGES);
+}
 
 Router.configure({
     layoutTemplate: 'ApplicationLayout'
@@ -56,7 +61,7 @@ if (Meteor.isClient) {
   ///
   Template.available_user_list.helpers({
    users:function(){
- 
+
      return Meteor.users.find();
     }
   })
@@ -78,12 +83,23 @@ if (Meteor.isClient) {
 
   Template.chat_page.helpers({
     messages:function(){
+      $(".chatty").scrollTop(MAX_MESSAGES);
+      $(".insidechatty").scrollTop(MAX_MESSAGES);
+
+      console.log("Set Interval to scroll")
+      //Meteor.setInterval(timerScroll, 1000);
+
       var chat = Chats.findOne({_id:Session.get("chatId")});
-      if (chat)
-        return chat.messages;
+      if (chat) {
+            $(".chatty").scrollTop(MAX_MESSAGES);
+                  return chat.messages;
+      }
+
     },
     other_user:function()
     {
+      $(".chatty").scrollTop(MAX_MESSAGES);
+      $(".insidechatty").scrollTop(MAX_MESSAGES);
       var chat = Chats.findOne({_id:Session.get("chatId")});
       if (chat)
         return chat.user2Id;
@@ -130,6 +146,7 @@ if (Meteor.isClient) {
 
   // this event fires when the user sends a message on the chat page
   'submit .js-send-chat':function(event){
+
     // stop the form from triggering a page reload
     event.preventDefault();
     if (!Meteor.userId()) {
@@ -146,11 +163,15 @@ if (Meteor.isClient) {
     // reset the form
     event.target.chat.value = "";
 
-    $(".chatty").scrollTop(MAx_MESSAGES);
-    //$(".chatty").scrollTop($(".chatty").scrollHeight);
+    $(".chatty").scrollTop(Number.MAX_VALUE);
+    $(".insidechatty").scrollTop(Number.MAX_VALUE);
     }
  });
 }
+
+
+
+
 
 
 // start up script that creates some users for testing
@@ -178,6 +199,16 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
 
     if (!Meteor.users.findOne()){
+      console.log("creating additional users");
+Meteor.users.insert({profile:{username:"bart", avatar:"bart.png"}, emails:[{address:"bart@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+Meteor.users.insert({profile:{username:"lisa", avatar:"lisa.png"}, emails:[{address:"lisa@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+
+Meteor.users.insert({profile:{username:"homer", avatar:"homer.png"}, emails:[{address:"homer@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+Meteor.users.insert({profile:{username:"dave", avatar:"dave.png"}, emails:[{address:"dave@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+
+Meteor.users.insert({profile:{username:"ralph", avatar:"ralph.png"}, emails:[{address:"ralph@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+Meteor.users.insert({profile:{username:"toady", avatar:"toady.png"}, emails:[{address:"toady@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+
       for (var i=1;i<9;i++){
         var email = "user"+i+"@test.com";
         var username = "user"+i;
@@ -185,6 +216,7 @@ if (Meteor.isServer) {
         console.log("creating a user with password 'test123' and username/ email: "+email);
         Meteor.users.insert({profile:{username:username, avatar:avatar}, emails:[{address:email}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
       }
+
     }
   });
 }
@@ -214,7 +246,7 @@ if (Meteor.isServer) {
     }},
     insertChat: function(user1,user2){
       if (!user1 || !user2) {
-         console.log("Error: cannot chat with someone that does not exist on the internet!");
+         console.log("Error: cannot chat with someone that does not exist!");
       }
       else
         Chats.insert({user1Id:user1, user2Id:user2});
