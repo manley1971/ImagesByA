@@ -17,16 +17,18 @@ Router.route('/', function () {
   });
 
   // specify a route that allows the current user to chat to another users
-Router.route('/chat/:_id', function () {
+Router.route('/get-images/:_id', function () {
     if (!Meteor.userId()) {
       console.log("Security alert: trying to view folder but not logged in");
       this.render("navbar", {to:"header"});
       this.render("lobby_page", {to:"main"});
       return;
     }
-    else
-          window.open("http://twitter.com", '_blank');
-
+    else {
+      var otherUserId = this.params._id;
+      console.log("ouid"+otherUserId)
+          window.open("https://www.dropbox.com/sh/gsjjev7lxzu5hm4/AADZebWrvMumwJEG2loHD7Tqa?dl=0", '_blank');
+}
 /*  // the user they want to chat to has id equal to
     // the id sent in after /chat/...
     var otherUserId = this.params._id;
@@ -74,10 +76,10 @@ if (Meteor.isClient) {
     },
     isMyUser:function(userId){
       if (userId == Meteor.userId()){
-        return true;
+        return false;
       }
       else {
-        return false;
+        return true;
       }
     }
   })
@@ -200,24 +202,18 @@ if (Meteor.isServer) {
 
   Meteor.startup(function () {
 
-    if (!Meteor.users.findOne()){
-      console.log("creating additional users");
-Meteor.users.insert({profile:{username:"bart", avatar:"bart.png"}, emails:[{address:"bart@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-Meteor.users.insert({profile:{username:"lisa", avatar:"lisa.png"}, emails:[{address:"lisa@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+  if (!Meteor.users.findOne()){
+      console.log("creating users");
+            var avatar = "ava4"+".png"
+      Meteor.users.insert({profile:{username:"Manley", avatar:avatar}, emails:[{address:"manley@stanfordalumni.org"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
 
-Meteor.users.insert({profile:{username:"homer", avatar:"homer.png"}, emails:[{address:"homer@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-Meteor.users.insert({profile:{username:"dave", avatar:"dave.png"}, emails:[{address:"dave@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-
-Meteor.users.insert({profile:{username:"ralph", avatar:"ralph.png"}, emails:[{address:"ralph@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-Meteor.users.insert({profile:{username:"toady", avatar:"toady.png"}, emails:[{address:"toady@test.com"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-
-      for (var i=1;i<9;i++){
-        var email = "user"+i+"@test.com";
-        var username = "user"+i;
-        var avatar = "ava"+i+".png"
+      for (var i=42;i<172;i++){
+        var email = "shoot"+i+"@images.com";
+        var username = "shoot"+i;
+        var avatar = "ava"+(i-41)+".png"
         console.log("creating a user with password 'test123' and username/ email: "+email);
         Meteor.users.insert({profile:{username:username, avatar:avatar}, emails:[{address:email}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
-      }
+    }
 
     }
   });

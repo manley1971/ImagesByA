@@ -1,7 +1,11 @@
 /* CSS declarations go here */
 body {
-  background-image: url('http://images.alphacoders.com/511/511052.jpg');
-  background-repeat: no-repeat;
+  background-image: url('http://hdwallpaperbook.com/wp-content/gallery/photo-backgrounds/gray-blue-spot-photography-background-backdrop.jpg');
+  background-image: url('http://www.eternalbuy.com/images/upfile_pl/month_1307/201372010025076486478.jpg');
+  background-image: url('http://hdwallpaperbook.com/wp-content/gallery/photo-backgrounds/gray-blue-spot-photography-background-backdrop.jpg');
+  background-image: url('http://codex-themes.com/codeus/wp-content/plugins/codeus_theme_control/bg/2.jpg');
+  font-family:cursive;
+  background-repeat: repeat;
   background-attachment: fixed;
 }
 

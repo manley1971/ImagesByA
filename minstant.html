@@ -20,7 +20,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/">
-       Images By Andie
+       Stored Photos, Images By Andie
       </a>
     </div>
     <div class="nav navbar-nav">
@@ -50,16 +50,18 @@
 	<div class="col-md-2">
 		<div class="user_avatar">
 			{{#if isMyUser _id}}
-			<div class="bg-success">{{getUsername _id}} (YOU)
+			<div class="bg-success">{{getUsername _id}} (NOT YOU)
 				<br/>
 				<img src="/{{profile.avatar}}" class="avatar_img">
 			</div>
 			{{else}}
-			<a href="/chat/{{_id}}">
+			<a href="/get-images/{{_id}}">
 				{{getUsername _id}}
 				<br/>
 				<img src="/{{profile.avatar}}" class="avatar_img">
+
 			</a>
+
 			{{/if}}
 		</div>
 	</div>
@@ -83,7 +85,7 @@
       <br>
       <br>
       <br>
-      
+
 			</div>
 
 	</div>
