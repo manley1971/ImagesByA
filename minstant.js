@@ -19,13 +19,15 @@ Router.route('/', function () {
   // specify a route that allows the current user to chat to another users
 Router.route('/chat/:_id', function () {
     if (!Meteor.userId()) {
-      console.log("Security alert: trying to chat but not logged in");
+      console.log("Security alert: trying to view folder but not logged in");
       this.render("navbar", {to:"header"});
       this.render("lobby_page", {to:"main"});
       return;
     }
+    else
+          window.open("http://twitter.com", '_blank');
 
-    // the user they want to chat to has id equal to
+/*  // the user they want to chat to has id equal to
     // the id sent in after /chat/...
     var otherUserId = this.params._id;
     // find a chat that has two users that match current user id
@@ -46,7 +48,7 @@ Router.route('/chat/:_id', function () {
       Session.set("chatId",chatId);
     }
     this.render("navbar", {to:"header"});
-    this.render("chat_page", {to:"main"});
+    this.render("chat_page", {to:"main"});*/
   });
 
 

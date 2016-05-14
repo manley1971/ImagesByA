@@ -1,4 +1,9 @@
 /* CSS declarations go here */
+body {
+  background-image: url('http://images.alphacoders.com/511/511052.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
 .chatty {
   height: 330px;
