@@ -14,6 +14,9 @@
 	</div>
 </template>
 
+
+
+
 <!-- top level template for the nav bar -->
 <template name="navbar">
 <nav class="navbar navbar-default">
@@ -22,13 +25,28 @@
       <a class="navbar-brand" href="/">
        Stored Photos, Images By Andie
       </a>
-    </div>
+    <a class="navbar-brand" href="help">
+       help
+      </a>
+      <a class="navbar-brand" href="about">
+        about
+      </a>
+       </div>
     <div class="nav navbar-nav">
     {{> loginButtons}}
 </div>
   </div>
 </nav>
 </template>
+
+<template name="help_page">
+<p>Login with your user and then click your icon. A Dropox directory will be shown. Photos will display and can be downloaded from there.
+</p>
+</template>
+<template name="about_page">
+<p> This page is just a storehouse for Andie's photos. For more information see <a href = "www.imagesbyandie.com" the main site></a></p>
+</template>
+
 
 <!-- Top level template for the lobby page -->
 <template name="lobby_page">

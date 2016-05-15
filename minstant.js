@@ -16,6 +16,18 @@ Router.route('/', function () {
     this.render("lobby_page", {to:"main"});
   });
 
+Router.route('/about', function () {
+      this.render("navbar", {to:"header"});
+      this.render("about_page", {to:"main"});
+    });
+
+Router.route('/help', function () {
+          this.render("navbar", {to:"header"});
+          this.render("help_page", {to:"main"});
+        });
+
+
+
   // specify a route that allows the current user to chat to another users
 Router.route('/get-images/:_id', function () {
     if (!Meteor.userId()) {
@@ -27,7 +39,7 @@ Router.route('/get-images/:_id', function () {
     else {
       var otherUserId = this.params._id;
       console.log("ouid"+otherUserId)
-          window.open("https://www.dropbox.com/sh/gsjjev7lxzu5hm4/AADZebWrvMumwJEG2loHD7Tqa?dl=0", '_blank');
+          window.open("https://www.dropbox.com/sh/gsjjev7lxzu5hm4/AADZebWrvMumwJEG2loHD7Tqa?dl=0"/*, '_blank'*/);
 }
 /*  // the user they want to chat to has id equal to
     // the id sent in after /chat/...
@@ -205,7 +217,7 @@ if (Meteor.isServer) {
   if (!Meteor.users.findOne()){
       console.log("creating users");
             var avatar = "ava4"+".png"
-      Meteor.users.insert({profile:{username:"Manley", avatar:avatar}, emails:[{address:"manley@stanfordalumni.org"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+      Meteor.users.insert({profile:{username:"shoot9", avatar:avatar}, emails:[{address:"manley@stanfordalumni.org"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
 
       for (var i=42;i<172;i++){
         var email = "shoot"+i+"@images.com";
