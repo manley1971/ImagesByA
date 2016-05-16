@@ -25,10 +25,10 @@
       <a class="navbar-brand" href="/">
        Stored Photos, Images By Andie
       </a>
-    <a class="navbar-brand" href="help">
+    <a class="navbar-brand" href="/help">
        help
       </a>
-      <a class="navbar-brand" href="about">
+      <a class="navbar-brand" href="/about">
         about
       </a>
        </div>
@@ -43,8 +43,9 @@
 <p>Login with your user and then click your icon. A Dropox directory will be shown. Photos will display and can be downloaded from there.
 </p>
 </template>
+
 <template name="about_page">
-<p> This page is just a storehouse for Andie's photos. For more information see <a href = "www.imagesbyandie.com" the main site></a></p>
+<p> This page is just a storehouse for Andie's photos. For more information see <a href = "http://www.imagesbyandie.com"> the main site</a></p>
 </template>
 
 
@@ -68,13 +69,13 @@
 	<div class="col-md-2">
 		<div class="user_avatar">
 			{{#if isMyUser _id}}
-			<div class="bg-success">{{getUsername _id}} (NOT YOU)
+			<div class="bg-success">{{getUsername _id}} (Needs Login)
 				<br/>
 				<img src="/{{profile.avatar}}" class="avatar_img">
 			</div>
 			{{else}}
 			<a href="/get-images/{{_id}}">
-				{{getUsername _id}}
+				{{getUsername _id}} (Logged In)
 				<br/>
 				<img src="/{{profile.avatar}}" class="avatar_img">
 

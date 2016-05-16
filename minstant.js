@@ -1,4 +1,6 @@
 Chats = new Mongo.Collection("chats");
+var manleyShootId;
+var manleyDemo;
 var MAX_MESSAGES = 1000000*100; //container size times messages
 function timerScroll() {
   console.log("Scrolling down.")
@@ -26,20 +28,24 @@ Router.route('/help', function () {
           this.render("help_page", {to:"main"});
         });
 
-
-
   // specify a route that allows the current user to chat to another users
 Router.route('/get-images/:_id', function () {
+    var otherUserId = this.params._id;
     if (!Meteor.userId()) {
       console.log("Security alert: trying to view folder but not logged in");
       this.render("navbar", {to:"header"});
       this.render("lobby_page", {to:"main"});
       return;
     }
-    else {
-      var otherUserId = this.params._id;
+    else if (Meteor.userId()==otherUserId && otherUserId==Meteor.users.find({ username:"shoot9" })){
+
       console.log("ouid"+otherUserId)
+
+}
+else if (Meteor.userId()==otherUserId){
           window.open("https://www.dropbox.com/sh/gsjjev7lxzu5hm4/AADZebWrvMumwJEG2loHD7Tqa?dl=0"/*, '_blank'*/);
+  console.log("ouid"+otherUserId)
+
 }
 /*  // the user they want to chat to has id equal to
     // the id sent in after /chat/...
@@ -213,13 +219,14 @@ if (Meteor.isServer) {
   }),
 
   Meteor.startup(function () {
-
-  if (!Meteor.users.findOne()){
+    Meteor.users.remove({});
+    if (!Meteor.users.findOne()){
       console.log("creating users");
             var avatar = "ava4"+".png"
       Meteor.users.insert({profile:{username:"shoot9", avatar:avatar}, emails:[{address:"manley@stanfordalumni.org"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
+    //  Meteor.users.insert({profile:{username:"shoot10", avatar:avatar}, emails:[{address:"manley@stanfordalumni.org"}],services:{ password:{"bcrypt" : "$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO"}}});
 
-      for (var i=42;i<172;i++){
+      for (var i=42;i<65;i++){
         var email = "shoot"+i+"@images.com";
         var username = "shoot"+i;
         var avatar = "ava"+(i-41)+".png"
